@@ -1,0 +1,13 @@
+@startuml CoinLogic
+state "CoinLogic State" as Cs101_CoinLogic_State {
+  state "Collecting" as Cs101_CoinLogic_State_Collecting
+  state "Idle" as Cs101_CoinLogic_State_Idle
+}
+
+Cs101_CoinLogic_State_Collecting --> Cs101_CoinLogic_State_Collecting : PhysicsProcess
+Cs101_CoinLogic_State_Idle --> Cs101_CoinLogic_State_Collecting : StartCollecting
+
+Cs101_CoinLogic_State_Collecting : OnPhysicsProcess → Move, SelfDestruct
+
+[*] --> Cs101_CoinLogic_State_Idle
+@enduml

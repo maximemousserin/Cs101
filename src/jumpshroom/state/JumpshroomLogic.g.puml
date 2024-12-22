@@ -1,0 +1,18 @@
+@startuml JumpshroomLogic
+state "JumpshroomLogic State" as Cs101_JumpshroomLogic_State {
+  state "Cooldown" as Cs101_JumpshroomLogic_State_Cooldown
+  state "Idle" as Cs101_JumpshroomLogic_State_Idle
+  state "Launching" as Cs101_JumpshroomLogic_State_Launching
+  state "Loading" as Cs101_JumpshroomLogic_State_Loading
+}
+
+Cs101_JumpshroomLogic_State_Cooldown --> Cs101_JumpshroomLogic_State_Idle : CooldownCompleted
+Cs101_JumpshroomLogic_State_Idle --> Cs101_JumpshroomLogic_State_Loading : Hit
+Cs101_JumpshroomLogic_State_Launching --> Cs101_JumpshroomLogic_State_Cooldown : LaunchCompleted
+Cs101_JumpshroomLogic_State_Loading --> Cs101_JumpshroomLogic_State_Launching : Launch
+
+Cs101_JumpshroomLogic_State_Cooldown : OnEnter → StartCooldownTimer
+Cs101_JumpshroomLogic_State_Loading : OnEnter → Animate
+
+[*] --> Cs101_JumpshroomLogic_State_Idle
+@enduml

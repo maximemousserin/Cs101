@@ -1,0 +1,45 @@
+@startuml PlayerLogic
+state "PlayerLogic State" as Cs101_PlayerLogic_State {
+  state "Alive" as Cs101_PlayerLogic_State_Alive {
+    state "Airborne" as Cs101_PlayerLogic_State_Airborne {
+      state "Falling" as Cs101_PlayerLogic_State_Falling
+      state "Jumping" as Cs101_PlayerLogic_State_Jumping
+      state "Liftoff" as Cs101_PlayerLogic_State_Liftoff
+    }
+    state "Grounded" as Cs101_PlayerLogic_State_Grounded {
+      state "Idle" as Cs101_PlayerLogic_State_Idle
+      state "Moving" as Cs101_PlayerLogic_State_Moving
+    }
+  }
+  state "Dead" as Cs101_PlayerLogic_State_Dead
+  state "Disabled" as Cs101_PlayerLogic_State_Disabled
+}
+
+Cs101_PlayerLogic_State_Airborne --> Cs101_PlayerLogic_State_Falling : StartedFalling
+Cs101_PlayerLogic_State_Airborne --> Cs101_PlayerLogic_State_Idle : HitFloor
+Cs101_PlayerLogic_State_Airborne --> Cs101_PlayerLogic_State_Moving : HitFloor
+Cs101_PlayerLogic_State_Alive --> Cs101_PlayerLogic_State_Alive : Moved
+Cs101_PlayerLogic_State_Alive --> Cs101_PlayerLogic_State_Alive : PhysicsTick
+Cs101_PlayerLogic_State_Alive --> Cs101_PlayerLogic_State_Alive : Pushed
+Cs101_PlayerLogic_State_Alive --> Cs101_PlayerLogic_State_Dead : Killed
+Cs101_PlayerLogic_State_Disabled --> Cs101_PlayerLogic_State_Idle : Enable
+Cs101_PlayerLogic_State_Grounded --> Cs101_PlayerLogic_State_Falling : LeftFloor
+Cs101_PlayerLogic_State_Grounded --> Cs101_PlayerLogic_State_Jumping : Jump
+Cs101_PlayerLogic_State_Grounded --> Cs101_PlayerLogic_State_Liftoff : LeftFloor
+Cs101_PlayerLogic_State_Idle --> Cs101_PlayerLogic_State_Moving : StartedMovingHorizontally
+Cs101_PlayerLogic_State_Jumping --> Cs101_PlayerLogic_State_Jumping : Jump
+Cs101_PlayerLogic_State_Moving --> Cs101_PlayerLogic_State_Idle : StoppedMovingHorizontally
+
+Cs101_PlayerLogic_State_Alive : OnPhysicsTick → MovementComputed
+Cs101_PlayerLogic_State_Alive : OnPushed → VelocityChanged
+Cs101_PlayerLogic_State_Disabled : OnEnter → Idle
+Cs101_PlayerLogic_State_Falling : OnEnter → Fall
+Cs101_PlayerLogic_State_Grounded : OnJump → VelocityChanged
+Cs101_PlayerLogic_State_Idle : OnEnter → Idle
+Cs101_PlayerLogic_State_Jumping : OnEnter → Jump
+Cs101_PlayerLogic_State_Jumping : OnJump → VelocityChanged
+Cs101_PlayerLogic_State_Liftoff : OnEnter → Jump
+Cs101_PlayerLogic_State_Moving : OnEnter → Move
+
+[*] --> Cs101_PlayerLogic_State_Disabled
+@enduml

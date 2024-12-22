@@ -1,0 +1,18 @@
+@startuml PlayerCameraLogic
+state "PlayerCameraLogic State" as Cs101_PlayerCameraLogic_State {
+  state "InputDisabled" as Cs101_PlayerCameraLogic_State_InputDisabled
+  state "InputEnabled" as Cs101_PlayerCameraLogic_State_InputEnabled
+}
+
+Cs101_PlayerCameraLogic_State --> Cs101_PlayerCameraLogic_State : PhysicsTicked
+Cs101_PlayerCameraLogic_State --> Cs101_PlayerCameraLogic_State : TargetOffsetChanged
+Cs101_PlayerCameraLogic_State --> Cs101_PlayerCameraLogic_State : TargetPositionChanged
+Cs101_PlayerCameraLogic_State_InputDisabled --> Cs101_PlayerCameraLogic_State_InputEnabled : EnableInput
+Cs101_PlayerCameraLogic_State_InputEnabled --> Cs101_PlayerCameraLogic_State_InputDisabled : DisableInput
+Cs101_PlayerCameraLogic_State_InputEnabled --> Cs101_PlayerCameraLogic_State_InputEnabled : JoyPadInputOccurred
+Cs101_PlayerCameraLogic_State_InputEnabled --> Cs101_PlayerCameraLogic_State_InputEnabled : MouseInputOccurred
+
+Cs101_PlayerCameraLogic_State : OnPhysicsTicked → CameraLocalPositionChanged, CameraOffsetChanged, GimbalRotationChanged, GlobalTransformChanged
+
+[*] --> Cs101_PlayerCameraLogic_State_InputDisabled
+@enduml

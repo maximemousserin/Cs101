@@ -1,0 +1,7 @@
+@startuml InGameUILogic
+state "InGameUILogic State" as Cs101_InGameUILogic_State
+Cs101_InGameUILogic_State : OnNumCoinsAtStart() → NumCoinsAtStartChanged
+Cs101_InGameUILogic_State : OnNumCoinsCollected() → NumCoinsCollectedChanged
+
+[*] --> Cs101_InGameUILogic_State
+@enduml
